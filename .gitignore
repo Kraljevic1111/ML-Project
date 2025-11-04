@@ -1,0 +1,3 @@
+#ignoring folder model and all pkl files
+model/
+*.pkl

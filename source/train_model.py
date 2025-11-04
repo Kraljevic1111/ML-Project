@@ -30,14 +30,14 @@ df['combined title'] = df['Product Title'] + " " + df['fridge freezers'].astype(
 
 #faetures and labels
 
-x = df[["Product Title","combined title"]]
+x = df[["combined title"]]
 y = df[" Category Label"]
 
 #transforming data 
 
 preprocesor = ColumnTransformer([
-        ("title",TfidfVectorizer(),"Product Title"),
-        ("combined",TfidfVectorizer(),"combined title")
+
+    ("combined",TfidfVectorizer(),"combined title")
 ])
 
 #creating a pipeline
