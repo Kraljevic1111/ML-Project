@@ -1,6 +1,7 @@
 #importing needed librarys
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
@@ -23,22 +24,24 @@ df[' Category Label'] = df[' Category Label'].astype(str).str.lower()
 df = df.drop(columns=['product ID', 'Merchant ID', '_Product Code', 'Number_of_Views', 'Merchant Rating', ' Listing Date  '])
 
 # Creating a new column to improve accuracy of model
-df['fridge freezers']= df['Product Title'].astype(str).str.lower().str.contains('fridge freezers')
 
-#creating another new column to combine existing columns to improve accuracy of model
-df['combined title'] = df['Product Title'] + " " + df['fridge freezers'].astype(str)
+df['is Fridge Freezers'] = df['Product Title'].astype(str).str.lower().str.strip().str.contains("serie 4 kgv39vl31g","sbs8004po").astype(int)
+
+
 
 #faetures and labels
 
-x = df[["combined title"]]
+x = df[["Product Title","is Fridge Freezers"]]
 y = df[" Category Label"]
 
-#transforming data 
 
+#transforming data 
 preprocesor = ColumnTransformer([
 
-    ("combined",TfidfVectorizer(),"combined title")
+    ("title",TfidfVectorizer(),"Product Title"),
+    ("checking",MinMaxScaler(),['is Fridge Freezers'])
 ])
+
 
 #creating a pipeline
 

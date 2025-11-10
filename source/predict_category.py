@@ -1,5 +1,6 @@
 import pandas as pd
 import joblib
+import re
 
 #load the model
 model = joblib.load("model/product_classifier_model.pkl")
@@ -12,8 +13,11 @@ while True:
         print("Exiting ....")
         break
     
+    is_frd_freezer = int("serie 4 kgv39vl31g" in title.lower() or "sbs8004po" in title.lower())
     user_input = pd.DataFrame([
-        {"combined title":title}
+        {"Product Title":title,
+        "is Fridge Freezers": is_frd_freezer 
+         }
     ])
     
     prediction = model.predict(user_input)[0]
